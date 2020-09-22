@@ -1,0 +1,49 @@
+#!/usr/bin/env php
+<?php
+/**
+ * $Id:$
+ * ---------------------------------------------------------------------------
+ *  @version   $Revision:$
+ *  @package   NGT\Monitor
+ *  @author    Norman Georg-Tusel (norm@ngeorg.com)
+ *  @link      https://georg-tusel.com/
+ *  @copyright © ngt 2019, https://georg-tusel.com/
+ * ---------------------------------------------------------------------------
+ * ::::::::::::: vim: set noai noet ru nu ml fenc=utf-8 ts=4 sw=4 tw=0 ft=php:
+ * ---------------------------------------------------------------------------
+ */
+@define('MONITOR_MODE', 'cli');
+
+require __DIR__ . '/vendor/autoload.php';
+
+use NGT\Monitor\Console;
+use App\Commands\SslCommand;
+use App\Commands\SiteCommand;
+use App\Commands\ConfigCommand;
+
+// NGT Monitor Application
+$app = require_once __DIR__.'/bootstrap.php';
+
+// console application
+$console = new Console();
+
+foreach ([
+	'check:config' => new ConfigCommand('check:config'),
+	'check:site' => new SiteCommand('check:site'),
+	'check:ssl' => new SslCommand('check:ssl'),
+]
+as $k => $command) {
+	$command->setMainApplication($app);
+ 	$console->add($command);
+ };
+
+// run
+try {
+    $console->run();
+}
+catch (\Exception $e) {
+    // Handle app's exceptions
+    echo "\n\n";
+    echo "ERROR: ".$e->getMessage()."\n";
+    echo "\n\n";
+}

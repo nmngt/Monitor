@@ -1,0 +1,13 @@
+.env
+.phpintel
+.php_cs.cache
+composer.phar
+/vendor/
+/storage/logs/
+/storage/php_error.log
+
+# commercial lib
+lib/techie/
+# Commit your application's lock file https://getcomposer.org/doc/01-basic-usage.md#commit-your-composer-lock-file-to-version-control
+# You may choose to ignore a library lock file http://getcomposer.org/doc/02-libraries.md#lock-file
+# composer.lock
